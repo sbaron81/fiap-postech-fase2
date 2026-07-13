@@ -1,4 +1,18 @@
-## Vídeo de Demonstração (até 20 min):
+## Relatório de Entrega (.PDF ou .txt):
+• Nomes dos participantes, RM e usernames do Discord.
+Nome: Sidnei Baron
+RM: rm370250
+Discord: sbaron81
+
+• Link dos repositórios.
+https://github.com/sbaron81/fiap-postech-fase2
+
+• Link do vídeo salvo no Youtube ou lugar de sua preferência.
+https://youtu.be/YyUNaFNj0Ms
+
+
+
+Vídeo de Demonstração (até 20 min):
 • Mostre o docker compose up funcionando, com todos os 9 contêineres (5 apps + 4 DBs) rodando localmente.
 ```bash
 cd /home/sbaron/github/fiap-postech-fase2
@@ -124,14 +138,3 @@ Werkzeug==2.2.2
   * DynamoDB: Gravar dados não-estruturado em grande volume. Muito rápido também.
   
 
-## Relatório de Entrega (.PDF ou .txt):
-• Nomes dos participantes, RM e usernames do Discord.
-Nome: Sidnei Baron
-RM: rm370250
-Discord: sbaron81
-
-• Link dos repositórios.
-https://github.com/sbaron81/fiap-postech-fase2
-
-• Link do vídeo salvo no Youtube ou lugar de sua preferência.
-https://youtu.be/YyUNaFNj0Ms
