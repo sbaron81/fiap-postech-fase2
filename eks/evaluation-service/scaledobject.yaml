@@ -12,15 +12,15 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: analytics-service-scaledobject
-  namespace: analytics-service
+  name: evaluation-service-scaledobject
+  namespace: evaluation-service
 spec:
   scaleTargetRef:
-    name: analytics-service
-  minReplicaCount: 1
+    name: evaluation-service
+  minReplicaCount: 2
   maxReplicaCount: 10
   pollingInterval: 15   # segundos entre cada checagem da fila
-  cooldownPeriod: 60    # segundos sem trabalho antes de voltar a 0 réplicas
+  cooldownPeriod: 60    # segundos sem trabalho antes de voltar ao mínimo de réplicas
   triggers:
     - type: aws-sqs-queue
       metadata:
