@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker rmi *)",
+      "Bash(curl -s -w '\\\\nHTTP %{http_code}\\\\n' http://localhost:8002/health)"
+    ]
+  }
+}

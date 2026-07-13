@@ -1,0 +1,136 @@
+
+services:
+  auth_service:
+    build:
+      context: .
+      dockerfile: Dockerfile_auth-service
+    container_name: auth_service
+    environment:
+      DATABASE_URL: postgres://admin:password123@auth_db:5432/auth_db
+      PORT: "8001"
+      MASTER_KEY: admin-secreto-123
+    ports:
+      - "8001:8001"
+    depends_on:
+      - auth_db
+
+  flag_service:
+    build:
+      context: .
+      dockerfile: Dockerfile_flag-service
+    container_name: flag_service
+    environment:
+      DATABASE_URL: postgres://admin:password123@flags_db:5432/flags_db
+      PORT: "8002"
+      AUTH_SERVICE_URL: http://auth_service:8001
+    ports:
+      - "8002:8002"
+    depends_on:
+      - flags_db
+      - auth_service
+
+  targeting_service:
+    build:
+      context: .
+      dockerfile: Dockerfile_targeting-service
+    container_name: targeting_service
+    environment:
+      DATABASE_URL: postgres://admin:password123@targeting_db:5432/targeting_db
+      PORT: "8003"
+      AUTH_SERVICE_URL: http://auth_service:8001
+    ports:
+      - "8003:8003"
+    depends_on:
+      - targeting_db
+      - auth_service
+
+  evaluation_service:
+    build:
+      context: .
+      dockerfile: Dockerfile_evaluation-service
+    container_name: evaluation_service
+    environment:
+      PORT: "8004"
+      REDIS_URL: redis://redis:6379
+      AUTH_SERVICE_URL: http://auth_service:8001
+      FLAG_SERVICE_URL: http://flag_service:8002
+      TARGETING_SERVICE_URL: http://targeting_service:8003
+      SERVICE_API_KEY: tm_key_abacbc127a3fae9377e55aa50828561fd27d409b0c559ca022e97183bf9169bc
+      AWS_SQS_URL: https://sqs.us-east-1.amazonaws.com/343770067934/fiap-fase2
+      AWS_REGION: us-east-1
+    volumes:
+      - ~/.aws:/root/.aws:ro
+    ports:
+      - "8004:8004"
+    depends_on:
+      - flags_db
+      - auth_service
+      - redis
+
+  analytics_service:
+    build:
+      context: .
+      dockerfile: Dockerfile_analytics-service
+    container_name: analytics_service
+    environment:
+      PORT: "8005"
+      AWS_SQS_URL: https://sqs.us-east-1.amazonaws.com/343770067934/fiap-fase2
+      AWS_DYNAMODB_TABLE: ToggleMasterAnalytics
+      AWS_REGION: us-east-1
+    volumes:
+      - ~/.aws:/root/.aws:ro
+    ports:
+      - "8005:8005"
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  auth_db:
+    image: postgres:15-alpine
+    container_name: auth_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: auth_db
+    ports:
+      - "5431:5432"
+    volumes:
+      - ./auth-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - auth_data:/var/lib/postgresql/data
+
+  flags_db:
+    image: postgres:15-alpine
+    container_name: flags_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: flags_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./flag-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - flags_data:/var/lib/postgresql/data
+
+  targeting_db:
+    image: postgres:15-alpine
+    container_name: targeting_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: targeting_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./targeting-service/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - targeting_data:/var/lib/postgresql/data
+
+volumes:
+  auth_data:
+  flags_data:
+  targeting_data:
+  redis_data:

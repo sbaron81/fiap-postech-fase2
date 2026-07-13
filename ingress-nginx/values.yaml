@@ -1,0 +1,12 @@
+controller:
+  service:
+    annotations:
+      # Ativa o Network Load Balancer (NLB) da AWS
+      service.beta.kubernetes.io/aws-load-balancer-type: "external"
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+  
+  # Impede o Helm de sobrescrever a ServiceAccount que criamos com o eksctl
+  serviceAccount:
+    create: false
+    name: nginx-ingress-serviceaccount
