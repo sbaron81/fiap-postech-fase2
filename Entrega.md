@@ -126,9 +126,9 @@ Werkzeug==2.2.2
 
 ## Relatório de Entrega (.PDF ou .txt):
 • Nomes dos participantes, RM e usernames do Discord.
-Sidnei Baron
-rm370250
-sbaron81
+Nome: Sidnei Baron
+RM: rm370250
+Discord: sbaron81
 
 • Link dos repositórios.
 https://github.com/sbaron81/fiap-postech-fase2
