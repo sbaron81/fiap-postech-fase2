@@ -71,20 +71,17 @@ docker push 343770067934.dkr.ecr.us-east-1.amazonaws.com/fiap/targeting-service
 
 Username: postgres
 Pass: Mypasswordaws.123
-Pass64: TXlwYXNzd29yZGF3cy4xMjM=
+Pass64: ********
 
 auth-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com
 flag-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com
 targeting-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com
 
-echo -n 'postgres://postgres:Mypasswordaws.123@auth-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com:5432/postgres' | base64
-cG9zdGdyZXM6Ly9wb3N0Z3JlczpNeXBhc3N3b3JkYXdzLjEyM0BhdXRoLXNlcnZpY2UuYzNpdm5wd2gzZHAzLnVzLWVhc3QtMS5yZHMuYW1hem9uYXdzLmNvbTo1NDMyL3Bvc3RncmVz
+echo -n 'postgres://postgres:********@auth-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com:5432/postgres' | base64
 
-echo -n 'postgres://postgres:Mypasswordaws.123@flag-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com:5432/postgres' | base64
-cG9zdGdyZXM6Ly9wb3N0Z3JlczpNeXBhc3N3b3JkYXdzLjEyM0BmbGFnLXNlcnZpY2UuYzNpdm5wd2gzZHAzLnVzLWVhc3QtMS5yZHMuYW1hem9uYXdzLmNvbTo1NDMyL3Bvc3RncmVz
+echo -n 'postgres://postgres:*******@flag-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com:5432/postgres' | base64
 
-echo -n 'postgres://postgres:Mypasswordaws.123@targeting-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com:5432/postgres' | base64
-cG9zdGdyZXM6Ly9wb3N0Z3JlczpNeXBhc3N3b3JkYXdzLjEyM0B0YXJnZXRpbmctc2VydmljZS5jM2l2bnB3aDNkcDMudXMtZWFzdC0xLnJkcy5hbWF6b25hd3MuY29tOjU0MzIvcG9zdGdyZXM=
+echo -n 'postgres://postgres:******@targeting-service.c3ivnpwh3dp3.us-east-1.rds.amazonaws.com:5432/postgres' | base64
 
 kubectl run pg-test --rm -i --tty --image=postgres:17-alpine -- sh
 
